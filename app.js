@@ -20,24 +20,22 @@ mongoose.connection.on('error', (err) => {
   process.exit();
 });
 
-const userschema = new mongoose.Schema({
+const commentchema = new mongoose.Schema({
 	name : String
 });
 
-const user = mongoose.model('Customer',userschema);
+const comment = mongoose.model('Comment',commentchema);
 
 
 app.get("/",function(req,res){
 	res.render("home.ejs");
 })
 app.post("/",function(req,res){
-	user.insertOne({name:"sajeev"},function(result,err){
+	comment.create({name:req.body.comment},function(result,err){
 	if(err){
 		console.log(err);
 	}
 })
-	res.send(req.body);
-
 	});
 app.listen(port,function(){
 	console.log("Example App Listening On port" + port);
