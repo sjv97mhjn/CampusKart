@@ -60,26 +60,12 @@ var j = 0;
 }
 
 app.get("/",function(req,res){
-
-	// var regex = new Regex("^[789]\d{10}$");
-	// if(regex.test("9711755874"))
-	// 	console.log("OKAY");
-	// else
-	// 	console.log("NOT OKAY");
-
-
 	res.render("home.ejs");
 
 })
+app.get("/email",function(req,res){  //Testing Purpose
+	
 
-app.post("/",function(req,res){
-	comment.create({name:req.body.comment},function(result,err){
-	if(err){
-		console.log(err);
-	}
-})
-	});
-app.get("/email",function(req,res){
 
 })
 //Register Routes
@@ -101,26 +87,28 @@ console.log(J);
 			//res.redirect('/login');
 				  var email=r.EMAIL;
 				   console.log('Email : ' +email);
-				  client.sendEmail({
-				    to: email, 
-				    from: 'sjv97mhjn@gmail.com', 
-				    subject: 'greetings', 
-				    message: 'Hi '+' click on link: http://localhost:3000/'+email+'/verify   for completing registration', 
-				    altText: 'plain text'
-				  	},
-				    function (err, data, result) {
-				    if(err)
-				    {
-				      console.log(err);
-				    }
-				    else{
-				      console.log("Email Sent");
-				       res.render('verifyemail.ejs');
-
-				    }
-				    
-				 // ... 
-				});
+						var message1 ='<h1>Welcome To CampusKart</h1> <h2>WE Are Happy To Welcome You .</h2> <h2>You have to just click on <a href="http://localhost:3000/' ,
+							message2 ='/verify">this</a> to verify your email adress</h2> ',
+			 				message3 = '<h4>For Any help or other stuff .Mail us at sjv97mhjn@gmail.com</h4> <h5>Thank You</h5>';
+						client.sendEmail({
+							    to: 'sjv97mhjn@gmail.com', 
+							    from: 'sjv97mhjn@gmail.com', 
+							    subject: 'greetings', 
+							    message: message1 +email + message2 + message3 , 
+							    altText: 'plain text'
+							  	},
+							    function (err, data, result) {
+							    if(err)
+							    {
+							      console.log(err);
+							    }
+							    else{
+							      console.log("Email Sent");
+							       res.render('verifyemail.ejs');
+							    }
+							  
+							 // ... 
+							});
 
 
 	})
