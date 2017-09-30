@@ -7,6 +7,8 @@ var userschema = new mongoose.Schema({
 	hostel:String,
 	floor:String,
 	room:String,
+	verified:{type:Number , default:0 },
+	createdat: { type: Date, default: Date.now }
 });
 userschema.plugin(passportlocalmongoose);
 var user = mongoose.model('User',userschema);

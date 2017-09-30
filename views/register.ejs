@@ -1,4 +1,46 @@
-<% include partials/header %>
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
+	<link rel="stylesheet" type="text/css" href="/stylesheet/style.css">
+	<style>
+    body {
+      font-family: Helvetica, sans-serif;
+    }
+    .status-message {
+      background-color: #5ff;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    textarea {
+      margin: 10px 0;
+      resize: none;
+    }
+  </style>
+	
+	<title>E-commerce
+	</title>
+</head>
+<body>
+<div class="navbar navbar-default">
+	<div class="container">
+		<div class="navbar-header">
+		<strong>CampusKart</strong>
+		</div>
+		<div class="nav navbar-nav">
+			<li><a href="#">About</a></li>
+		</div>
+		<div class="nav navbar-nav navbar-right">
+		   <li><a href="/register">Register</a></li>
+			<li><a href="/login">Login</a></li>
+			<li><a href="/logout">Logout</a></li>
+			<li><a href="#">Help</a></li>
+		
+		</div>
+	</div>
+</div>
+
 <div class="container">
 <div class="jumbotron">
 	<form action="/register" method="post">
@@ -8,13 +50,31 @@
 		<label>Username</label>
 		<input class="form-control" type="text" name="USERNAME" placeholder="username">
 		<label>Phone No.</label>
-		<input class="form-control" type="text" name="PHONE" placeholder="Number">
+		<input class="form-control" type="text" id="phone" name="PHONE"  placeholder="Number">
 		<label>Email</label>
-		<input  class="form-control" type="text" name="EMAIL" placeholder="abc@gmail.com">
+		<input  class="form-control" type="text"  name="EMAIL" placeholder="abc@gmail.com">
 		<label>Password</label>
-		<input  class="form-control" type="password" name="PASSWORD" placeholder="password">
+		<input  class="form-control" type="password"  name="PASSWORD" placeholder="password"/>
 		<br>
-		<button class="btn btn-success ">Submit</button>
+		<input type="reset" name="reset">
+		<button class="btn btn-success" onClick="phone()"   >Submit</button>
 	</form>
 </div>
 </div>
+<script>
+	function phone(){
+		alert("Hi");
+// 		var phone = document.getElementById("phone").value
+// 		alert(phone);
+// var j = 0; 
+// 	for(i=0;i<phone.length;i++)
+// 	{  console.log(phone[i]);
+// 		if(phone[i]<'0'||phone[i]>'9')
+// 		{  
+// 			j++;	
+// 		}
+// 	}
+}
+</script>
+</body>
+</html>
