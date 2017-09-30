@@ -19,7 +19,7 @@ app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended :true}));
 app.use(express.static("public"));
 mongoose.Promise = global.Promise;
-mongoose.connection.openUri("mongodb://sjv97mhjn:1997@ds151004.mlab.com:51004/campuskart");
+mongoose.connection.openUri(controls.mongourl);
 mongoose.connection.on('error', (err) => {
   console.error(err);
   console.log('%s MongoDB connection error. Please make sure MongoDB is running.', chalk.red('✗'));
