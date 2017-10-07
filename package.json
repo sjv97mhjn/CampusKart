@@ -24,6 +24,7 @@
     "express-session": "^1.15.6",
     "fb": "^2.0.0",
     "fs": "0.0.1-security",
+    "method-override": "^2.3.10",
     "mongoose": "^4.11.13",
     "node-ses": "^2.0.5",
     "nodemon": "^1.12.1",
