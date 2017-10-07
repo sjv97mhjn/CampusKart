@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var user = require('../../models/user');
+var flightDetails = require("../../models/flightDetails");
 var passport = require('passport');
 
 module.exports = {
@@ -44,6 +45,13 @@ module.exports = {
 
 	list: function(req, res) {
 		// TO Do..
+		flightDetails.find({}).exec(function(err, allFlightDetails) {
+			if (err) {
+				console.log(err);
+			}
+
+			res.render("flightList", { flightDetails: allFlightDetails })
+		})
 	}
 
 }
