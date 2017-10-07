@@ -3,6 +3,8 @@ var express 		= require('express'),
 	passport		= require('passport'),
 	user 			= require('../models/user');
 
+
+
 var router  = express.Router();
 
 var routes = {
@@ -18,16 +20,18 @@ router.get("/register", routes.views.index.registerPage);
 
 router.post("/register", routes.views.index.registerProcess);
 
-router.get("/login", routes.views.index.loginPage);
-
 router.post("/login",passport.authenticate("local",{
         successRedirect:"/loggedin",
-        failureRedirect:"/login"
+        failureRedirect:"/register"
 }),function(req,res) {
+	console.log("POST REQUEST TO login");
 
 })
 
 router.get("/logout", routes.views.index.logout);
+
+// route for the list of flights
+router.get("/flight/list", routes.views.index.list);
 
 // router.get("/loggedin",isloggedin,function(req,res) {
 // 	console.log(req.user);

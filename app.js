@@ -26,23 +26,26 @@ app.use(express.static(__dirname + "/public"));
 app.use(express.static(__dirname + "/views"));
 app.use(methodOverride("_method"));
 
-// app.set('views',['./views']);
-// app.use(bodyparser.json());
-// app.use(bodyparser.urlencoded({extended :true}));
-// app.use(express.static("public"));
-// app.use(passport.initialize());
-// app.use(passport.session());
-// app.use(require("express-session")({ secret:"My_Name_Is_Sajeev_Mahajan",resave:false,saveUninitialized :false}));
-// passport.use(new localstrategy(user.authenticate()));
-// passport.serializeUser(user.serializeUser());
-// passport.deserializeUser(user.deserializeUser());
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(require("express-session")({ secret:"My_Name_Is_Sajeev_Mahajan",resave:false,saveUninitialized :false}));
+passport.use(new localstrategy(user.authenticate()));
+passport.serializeUser(user.serializeUser());
+passport.deserializeUser(user.deserializeUser());
+
+app.use(function(req, res, next) {
+	console.log(req.user);
+   		res.locals.currentUser = req.user;
+   next();
+});
+
 // mongoose.Promise = global.Promise;
 // mongoose.connection.openUri(controls.mongourl);
 // mongoose.connection.on('error', (err) => {
 //   console.error(err);
 //   console.log('%s MongoDB connection error. Please make sure MongoDB is running.', chalk.red('✗'));
 //   process.exit();
-//});
+// });
 
 
 
