@@ -11,13 +11,16 @@ var express 		= require('express'),
 	controls		= require('./models/config'),
 	client			= ses.createClient({ key: controls.Ases_KID, secret: controls.Ases_AKey}),
 	user 			= require('./models/user'),
+	flightDetails 	= require("./models/flightDetails"),
+	flightBooking 	= require("./models/flightBooking"),
 	Regex			= require('regex'),
 	passportlocalmongoose = require('passport-local-mongoose');
 var port = 3000;
 app.set('views',['./views']);
+
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended :true}));
-app.use(express.static("public"));
+app.use(express.static(__dirname + "/public"));
 mongoose.Promise = global.Promise;
 mongoose.connection.openUri(controls.mongourl);
 mongoose.connection.on('error', (err) => {
@@ -60,30 +63,24 @@ var j = 0;
 }
 
 app.get("/",function(req,res){
-	res.render("home.ejs");
+	res.render("main.ejs",{currentUser:null});
 
 })
-app.get("/email",function(req,res){  //Testing Purpose
-	
 
-
-})
 //Register Routes
-app.get("/register",function(req,res){
-	res.render("register.ejs");
-})
 app.post("/register",function(req,res){
 var r = req.body;
-var J=phone(r.PHONE);
-console.log(J);
+var J=Number(r.PHONE);
+console.log(r);
 
-	if(r.EMAIL!=null&&r.NAME!=null&&r.USERNAME!=null&&r.PHONE!=null&&r.PASSWORD!=null&&J==0){
+	if(r.EMAIL!=null&&r.NAME!=null&&r.USERNAME!=null&&r.PHONE!=null&&r.PASSWORD!=null&&J!=0){
 		console.log(r);
 	user.register(new user({username:r.USERNAME,email:r.EMAIL,name:r.NAME,phone:Number(r.PHONE)}),r.PASSWORD,function(err,uzer){
 		if(err){
 			//console.log(err);
 			throw err;			
 		}
+				console.log(uzer);
 			//res.redirect('/login');
 				  var email=r.EMAIL;
 				   console.log('Email : ' +email);
@@ -135,24 +132,65 @@ console.log(J);
 	})
 //Login Routes
 app.get("/login",function(req,res){
-	res.render("login.ejs");
+	res.render("main.ejs",{currentUser:null});
 })
 app.post("/login",passport.authenticate("local",{
-        successRedirect:"/loggedin",
+        successRedirect:"/list",
         failureRedirect:"/login"
 }),function(req,res){
-
+	console.log(req.body);
 })
+// app.post("/login",function(req,res){
+// 	res.send(req.body);
+// })
 app.get("/logout",function(req,res){
 	req.logout();
 
 	if(!req.user){
 	res.redirect("/"); }
 })
-app.get("/loggedin",isloggedin,function(req,res){
-	console.log(req.user);
-	res.render("loggedin.ejs");
+app.get("/map",function(req,res){
+	res.render("map.ejs");
 })
+
+app.get("/list",function(req,res){
+	//res.render("flight.ejs",{flightDetails:})
+	flightDetails.find({}).exec(function(err, allFlightDetails) {
+			if (err) {
+				console.log(err);
+			}
+
+			res.render("flight.ejs", { flightDetails:allFlightDetails})
+	 	})
+// var ObjectId = require('mongodb').ObjectID;
+//  flightBooking.create({flightId:,gate: "asd",flightArrival_time: new Date(),flightDeparture_time: new Date()},function(err,res){
+//  	if(err){throw err;}
+//  	else{
+//  		console.log("Success");
+//  	}
+//  })
+ })
+
+app.get("/list/:id", function(req, res) {
+	res.render("map.ejs");
+})
+app.post("/price/:fi",function(req,res) {
+	var ObjectId = require('mongodb').ObjectID;
+	//res.send(typeof(ObjectId("1234321412")));
+
+
+    //
+    console.log("Postman request hit");
+	flightBooking.findOneAndUpdate({flightId:ObjectId(req.params.fi),userId:ObjectId(req.params.ui)},{$set:{maxPrice:req.params.ep} },function(err,result){
+		if(err){
+			console.log(err);
+		}
+		else{
+			res.send("success");
+		}
+	})
+})
+
 app.listen(port,function(){
 	console.log("Example App Listening On port" + port);
 })

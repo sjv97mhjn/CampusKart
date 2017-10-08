@@ -4,9 +4,7 @@ var userschema = new mongoose.Schema({
 	name: String,
 	email:String,
 	phone:Number,
-	hostel:String,
-	floor:String,
-	room:String,
+	password: String,
 	verified:{type:Number , default:0 },
 	createdat: { type: Date, default: Date.now }
 });
